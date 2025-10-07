@@ -1,16 +1,34 @@
 {
-  // These tasks will run in order when initializing your CodeSandbox project.
-  "setupTasks": ["pip install -r requirements.txt"],
-
-  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "$schema": "https://codesandbox.io/schemas/tasks.json",
+  "setupTasks": [
+    {
+      "name": "Instalar Dependências",
+      "command": "pip install -r requirements.txt"
+    }
+  ],
   "tasks": {
-    "start": {
-      "name": "start",
-      "command": "python main.py",
-      "runAtStart": true,
+    "executar-app": {
+      "name": "Executar Aplicação",
+      "command": "python app/main.py",
+      "runAtStart": false,
       "preview": {
-        "port": 5000
+        "port": 3000
       }
+    },
+    "executar-debug": {
+      "name": "Executar com Debug",
+      "command": "LOG_LEVEL=DEBUG python app/main.py",
+      "runAtStart": false
+    },
+    "executar-producao": {
+      "name": "Executar em Produção",
+      "command": "APP_ENV=production python app/main.py",
+      "runAtStart": false
+    },
+    "validar-dados": {
+      "name": "Validar Dados Gerados",
+      "command": "python -c \"import pandas as pd; df = pd.read_excel('data/dados_processados.xlsx'); print(f'Total: {len(df)}'); print('IDs:', df['id'].tolist())\"",
+      "runAtStart": false
     }
   }
 }
