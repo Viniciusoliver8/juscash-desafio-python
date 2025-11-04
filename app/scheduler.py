@@ -22,6 +22,13 @@ class ScheduleManager:
         Returns:
             True se pode executar, False caso contrário
         """
+
+        """Verifica o ambiente antes de checar o horario"""
+        if settings.APP_ENV == "development":
+            logger.info("Ambiente está no 'development', ignorando deteção de horário")
+            return True
+
+
         hora_atual = datetime.now().strftime("%H:%M")
         
         if hora_atual == self.horario_permitido:
