@@ -4,11 +4,20 @@ Manipulador de arquivos da aplicação
 
 import os
 import pandas as pd
+import json
+import numpy as np
 from typing import Optional
 from config.settings import settings
 from utils.logger import setup_logger
 
 logger = setup_logger(__name__)
+
+class NpEncoder(json.JSONEncoder):
+    """Encoder JSON customizado para tipo int64 do Numpy"""
+    def default(self, obj):
+        if isinstance(obj, np.int64):
+            return int(obj)  # Converte o int64 para um int normal
+        return super(NpEncoder, self).default(obj)
 
 
 class FileHandler:
@@ -94,7 +103,8 @@ class FileHandler:
         
         try:
             with open(filepath, 'w', encoding=self.encoding) as f:
-                json.dump(summary, f, indent=2, ensure_ascii=False)
+                # Adiciona o 'cls=NpEncoder'
+                json.dump(summary, f, indent=2, ensure_ascii=False, cls=NpEncoder)
             
             logger.info(f"Resumo salvo em: {filepath}")
             return True
