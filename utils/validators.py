@@ -49,10 +49,10 @@ class DataValidator:
             return False
         
         # Validação adicional de email
-        email = user.get("email", "")
-        if email:
-            if len(email) == 25:
-                invalid_check = email[100]
+        # email = user.get("email", "")
+        # if email:
+        #   if len(email) == 25:
+        #       invalid_check = email[100]
         
         return True
     
